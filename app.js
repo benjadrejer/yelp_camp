@@ -15,14 +15,10 @@ mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
 //EJS is the view engine used
 app.set("view engine","ejs");
 
-//Schema Setup
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String,
-});
-
-var Campground = mongoose.model("Campground", campgroundSchema);
+//Models
+var Campground = require('./models/campground');
+var Comment = require('./models/comment');
+var User = require('./models/user');
 
 // Campground.create({
 //     name: "Granite Hill", 
