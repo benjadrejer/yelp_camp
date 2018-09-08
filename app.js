@@ -1,6 +1,7 @@
 //---SETUP---
 var passport = require('passport');
 var localStrategy = require('passport-local');
+var methodOverride = require('method-override');
 
 //Express Routes
 var commentRoutes = require('./routes/comments');
@@ -37,6 +38,7 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride('_method'));
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
