@@ -9,6 +9,11 @@ var commentRoutes = require('./routes/comments');
 var campgroundRoutes = require('./routes/campgrounds');
 var indexRoutes = require('./routes/index');
 
+//Environment Variables
+url = process.env.DATABSEURL || "mongodb://localhost/yelp_camp";
+port = process.env.PORT || 8080;
+sessionSecret = process.env.SECRET || 'thisisthebestsecretintheworld';
+
 //Models
 var User = require('./models/user');
 
@@ -23,7 +28,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //Mongoose
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
+// export DATABASEURL=mongodb://localhost/yelp_camp <- Making Environment Variable
+mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
 
 //EJS is the view engine used
 app.set("view engine","ejs");
@@ -33,7 +39,7 @@ app.use(express.static(__dirname + '/public'));
 
 //Configure Passport
 app.use(require('express-session')({
-    secret: 'thisisthebestsecretintheworld',
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
 }));
@@ -63,6 +69,6 @@ app.use("/campgrounds", campgroundRoutes);
 // seedDB();
 
 //Set the startup functionality and port to listen to
-app.listen(8080,function(){
+app.listen(port,function(){
     console.log("Yelpcamp Server Online");
 });
