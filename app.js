@@ -2,6 +2,7 @@
 var passport = require('passport');
 var localStrategy = require('passport-local');
 var methodOverride = require('method-override');
+var flash = require('connect-flash');
 
 //Express Routes
 var commentRoutes = require('./routes/comments');
@@ -39,6 +40,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
+app.use(flash());
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -46,6 +48,8 @@ passport.deserializeUser(User.deserializeUser());
 //Middleware for every single route
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
