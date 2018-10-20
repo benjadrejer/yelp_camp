@@ -10,7 +10,7 @@ var campgroundRoutes = require('./routes/campgrounds');
 var indexRoutes = require('./routes/index');
 
 //Environment Variables
-url = process.env.DATABSEURL || "mongodb://localhost/yelp_camp";
+url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
 port = process.env.PORT || 8080;
 sessionSecret = process.env.SECRET || 'thisisthebestsecretintheworld';
 
